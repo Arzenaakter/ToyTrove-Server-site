@@ -40,6 +40,27 @@ app.get('/allToys', async(req,res)=>{
     res.send(result)
 })
 
+// indexing for implement search by toy name
+const indexkeys = {toyName: 1}
+const indexOptions={ name : 'ToyName'}
+const result = await ToyCollection.createIndex(indexkeys,indexOptions);
+
+
+app.get('/toyNameSearch/:text', async(req,res)=>{
+    const searchName = req.params.text;
+    const result = await ToyCollection.find({
+        $or:[
+            {toyName: {$regex : searchName, $options: 'i'}}
+        ]
+    }).toArray()
+    res.send(result)
+})
+
+
+
+
+
+
 //  get data by id
 app.get('/allToys/:id', async(req,res)=>{
     const id = req.params.id;
