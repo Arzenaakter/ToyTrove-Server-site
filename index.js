@@ -32,17 +32,21 @@ const ToyCollection = client.db('ToyTroveDB').collection('AllToys')
 
 // get data
 app.get('/allToys', async(req,res)=>{
-    const cursor =ToyCollection.find()
-    const result = await cursor.toArray()
+
+    const result = await ToyCollection.find().limit(20).toArray();
+    // const cursor =ToyCollection.find()
+
+    // const result = await cursor.toArray()
     res.send(result)
 })
 
 
-// post data
+
+
+// post data all toys
 app.post('/allToys', async(req,res)=>{
     const toy = req.body;
     console.log(toy);
-
     const result = await ToyCollection.insertOne(toy);
     res.send(result)
 })
