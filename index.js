@@ -87,10 +87,26 @@ app.put('/allToys/:id',async(req,res)=>{
    }
    const result = await ToyCollection.updateOne(filter,updatedToyInfo,options)
    res.send(result)
-   
+  
 
 
 })
+
+
+// delete
+
+
+app.delete('/allToys/:id', async(req,res)=>{
+    const id = req.params.id;
+    const query ={ _id : new ObjectId(id) }
+    const result = await ToyCollection.deleteOne(query);
+    res.send(result)
+
+  })
+
+
+
+
 
 
 
