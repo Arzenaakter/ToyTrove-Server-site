@@ -10,7 +10,7 @@ app.use(express.json())
 // ToyTrove
 // TlmQeNJRmIzPGdF6
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.untmfwa.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -40,6 +40,13 @@ app.get('/allToys', async(req,res)=>{
     res.send(result)
 })
 
+//  get data by id
+app.get('/allToys/:id', async(req,res)=>{
+    const id = req.params.id;
+    const query ={_id: new ObjectId(id)}
+    const result = await ToyCollection.findOne(query)
+    res.send(result)
+})
 
 
 
