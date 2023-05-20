@@ -29,6 +29,7 @@ async function run() {
 
 
 const ToyCollection = client.db('ToyTroveDB').collection('AllToys')
+const BestCollection = client.db('ToyTroveDB').collection('bestSelling')
 
 // get data
 app.get('/allToys', async(req,res)=>{
@@ -39,6 +40,17 @@ app.get('/allToys', async(req,res)=>{
     // const result = await cursor.toArray()
     res.send(result)
 })
+
+
+// best selling data
+app.get('/bestSelling', async(req,res)=>{
+  const result = await BestCollection.find().toArray();
+  res.send(result)
+
+})
+
+
+
 
 // indexing for implement search by toy name
 const indexkeys = {toyName: 1}
@@ -72,10 +84,12 @@ app.get('/allToys/:id', async(req,res)=>{
 // get data by email
 app.get('/myToys/:email', async(req,res)=>{
 
-  
     const result = await ToyCollection.find({sellerEmail:req.params.email}).toArray()
     res.send(result)
 })
+
+
+
 
 
 // post data all toys
