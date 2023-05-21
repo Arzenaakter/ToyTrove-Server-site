@@ -87,8 +87,20 @@ app.get('/allToys/:id', async(req,res)=>{
 // get data by email
 app.get('/myToys/:email', async(req,res)=>{
 
-    const result = await ToyCollection.find({sellerEmail:req.params.email}).toArray()
-    res.send(result)
+  const email = req.params.email;
+  const sortBy = req.query.sortBy; // Get the sortBy query parameter for sorting
+
+  let sortOption = {};
+  if (sortBy === 'asc') {
+    sortOption = { price: 1 }; // Sort in ascending order by price
+  } else if (sortBy === 'desc') {
+    sortOption = { price: -1 }; // Sort in descending order by price
+  }
+
+  const result = await ToyCollection.find({ sellerEmail: email }).sort(sortOption).toArray();
+  res.send(result);
+
+
 })
 
 
